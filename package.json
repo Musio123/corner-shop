@@ -1,0 +1,19 @@
+{
+  "name": "corner-shop",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:setup": "node --env-file=.env.local scripts/setup-db.mjs",
+    "db:check": "node --env-file=.env.local scripts/db-check.mjs"
+  },
+  "dependencies": {
+    "next": "16.4.0",
+    "next-auth": "4.24.15",
+    "postgres": "3.4.9",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}
