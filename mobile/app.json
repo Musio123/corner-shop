@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Corner Shop",
+    "slug": "corner-shop-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "cornershop",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.musio123.cornershop"
+    },
+    "android": {
+      "package": "com.musio123.cornershop",
+      "edgeToEdgeEnabled": true
+    },
+    "extra": {
+      "apiUrl": "https://corner-shop-psi.vercel.app",
+      "googleClientId": "REPLACE_WITH_YOUR_GOOGLE_CLIENT_ID"
+    }
+  }
+}
