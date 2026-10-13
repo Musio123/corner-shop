@@ -10,6 +10,7 @@
     "db:check": "node --env-file=.env.local scripts/db-check.mjs"
   },
   "dependencies": {
+    "jose": "^4.15.5",
     "next": "16.4.0",
     "next-auth": "4.24.15",
     "postgres": "3.4.9",
