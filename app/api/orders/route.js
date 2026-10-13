@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/session";
 import { getDb } from "@/lib/db";
 import { sendOrderConfirmation } from "@/lib/brevo";
 
@@ -9,10 +8,11 @@ function clean(value, max) {
 }
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
+  const user = await getCurrentUser(request);
+  if (!user?.email) {
     return NextResponse.json({ error: "Please sign in first." }, { status: 401 });
   }
+  const session = { user };
 
   let body;
   try {
