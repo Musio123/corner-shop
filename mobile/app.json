@@ -13,11 +13,16 @@
     },
     "android": {
       "package": "com.musio123.cornershop",
+      "versionCode": 1,
       "edgeToEdgeEnabled": true
     },
     "extra": {
       "apiUrl": "https://corner-shop-psi.vercel.app",
-      "googleClientId": "REPLACE_WITH_YOUR_GOOGLE_CLIENT_ID"
-    }
+      "googleClientId": "REPLACE_WITH_YOUR_GOOGLE_CLIENT_ID",
+      "eas": {
+        "projectId": "7b85e446-58c2-4855-a313-67be91513b46"
+      }
+    },
+    "owner": "musio"
   }
 }
