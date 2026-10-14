@@ -7,17 +7,26 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  async function loadFromToken() {
+    const token = await api.getToken();
+    if (token) {
+      setUser({ signedIn: true });
+    } else {
+      setUser(null);
+    }
+  }
+
   useEffect(() => {
     (async () => {
-      const token = await api.getToken();
-      if (token) {
-        // We don't decode the token here; just mark as signed in. The cart call
-        // will 401 if the token is invalid, at which point we sign out.
-        setUser({ signedIn: true });
-      }
+      await loadFromToken();
       setLoading(false);
     })();
   }, []);
+
+  // Re-read the stored token (used after a demo login that saved it directly).
+  async function refresh() {
+    await loadFromToken();
+  }
 
   async function signIn(idToken) {
     const u = await api.loginWithGoogle(idToken);
@@ -31,7 +40,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut, refresh }}>
       {children}
     </AuthContext.Provider>
   );
@@ -40,3 +49,4 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
+

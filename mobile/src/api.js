@@ -32,6 +32,19 @@ export async function loginWithGoogle(idToken) {
   return data.user;
 }
 
+// DEMO login: sign in with just an email (same account as the website).
+export async function loginWithEmail(email, name) {
+  const res = await fetch(`${API_URL}/api/auth/demo`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, name }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Login failed");
+  await saveToken(data.token);
+  return data.user;
+}
+
 export async function fetchProducts() {
   const res = await fetch(`${API_URL}/api/products`);
   const data = await res.json();
