@@ -49,7 +49,7 @@ export default function CartScreen() {
         contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
         renderItem={({ item }) => (
           <View style={styles.row}>
-            <View style={styles.cardImage}>{item.image}</View>
+            <View style={styles.cardImage}><Text style={styles.imageText}>{item.image}</Text></View>
             <View style={styles.cardBody}>
               <Text style={styles.cardName}>{item.name}</Text>
               <Text style={styles.cardLine}>{formatPrice(item.price_cents * item.quantity)}</Text>
@@ -123,7 +123,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 2,
   },
-  cardImage: { fontSize: 30 },
+  cardImage: { width: 56, height: 56, backgroundColor: "#f1f2f8", borderRadius: 10, justifyContent: "center", alignItems: "center" },
+  imageText: { fontSize: 28 },
   cardBody: { flex: 1 },
   cardName: { fontSize: 15, fontWeight: "700", color: "#1f2330" },
   cardLine: { color: "#6b7080", marginTop: 4 },
@@ -133,11 +134,20 @@ const styles = StyleSheet.create({
   qty: { minWidth: 24, textAlign: "center", fontSize: 16, fontWeight: "700", color: "#1f2330" },
   remove: { color: "#dc2626", marginLeft: 8, fontWeight: "600" },
   bottomBar: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: "#fff",
     padding: 16,
     paddingBottom: 12,
     borderTopWidth: 1,
     borderTopColor: "#e6e8ef",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   totalRow: {
     flexDirection: "row",

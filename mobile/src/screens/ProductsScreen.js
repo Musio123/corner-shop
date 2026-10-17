@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   View, Text, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as api from "../api";
 import { formatPrice } from "../format";
 import { useCart } from "../cart";
@@ -11,6 +12,7 @@ export default function ProductsScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { cart, add } = useCart();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     api
@@ -55,10 +57,10 @@ export default function ProductsScreen({ navigation }) {
       <FlatList
         data={products}
         keyExtractor={(p) => String(p.id)}
-        contentContainerStyle={{ padding: 16, paddingBottom: 110 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <View style={styles.cardImage}>{item.image}</View>
+            <View style={styles.cardImage}><Text style={styles.imageText}>{item.image}</Text></View>
             <View style={styles.cardBody}>
               <Text style={styles.cardName}>{item.name}</Text>
               <Text style={styles.cardDesc} numberOfLines={2}>{item.description}</Text>
@@ -71,7 +73,7 @@ export default function ProductsScreen({ navigation }) {
         )}
       />
 
-      <View style={styles.cartBar} onPress={() => navigation.navigate("Cart")}>
+      <View style={[styles.cartBar, { paddingBottom: Math.max(16, insets.bottom) + 14 }]} onPress={() => navigation.navigate("Cart")}>
         <Text style={styles.cartBarText}>View cart · {cart.count} item{cart.count === 1 ? "" : "s"}</Text>
       </View>
     </View>
@@ -116,7 +118,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 2,
   },
-  cardImage: { fontSize: 36, width: 64, height: 64, textAlign: "center", backgroundColor: "#f1f2f8", borderRadius: 10 },
+  cardImage: { width: 64, height: 64, backgroundColor: "#f1f2f8", borderRadius: 10, justifyContent: "center", alignItems: "center" },
+  imageText: { fontSize: 32 },
   cardBody: { flex: 1 },
   cardName: { fontSize: 15, fontWeight: "700", color: "#1f2330" },
   cardDesc: { color: "#6b7080", fontSize: 13, marginTop: 2 },
@@ -128,11 +131,20 @@ const styles = StyleSheet.create({
   retry: { marginTop: 12 },
   retryText: { color: "#4f46e5", fontWeight: "600", textDecorationLine: "underline" },
   cartBar: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: "#fff",
     padding: 16,
     alignItems: "center",
     borderTopWidth: 1,
     borderTopColor: "#e6e8ef",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   cartBarText: { color: "#4f46e5", fontSize: 16, fontWeight: "700" },
 });
