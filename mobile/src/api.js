@@ -90,3 +90,15 @@ export async function removeFromCart(productId) {
   if (!res.ok) throw new Error(data.error || "Could not update cart");
   return data;
 }
+
+// Place an order (server validates prices & stock, clears nothing — app clears on success).
+export async function placeOrder(details) {
+  const res = await fetch(`${API_URL}/api/orders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...(await authHeaders()) },
+    body: JSON.stringify(details),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Could not place order");
+  return data; // { orderId, emailSent }
+}

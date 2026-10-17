@@ -10,6 +10,8 @@ import { CartProvider } from "./src/cart";
 import LoginScreen from "./src/screens/LoginScreen";
 import ProductsScreen from "./src/screens/ProductsScreen";
 import CartScreen from "./src/screens/CartScreen";
+import CheckoutScreen from "./src/screens/CheckoutScreen";
+import OrderScreen from "./src/screens/OrderScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +19,7 @@ function HeaderRight() {
   const { signOut } = useAuth();
   return (
     <TouchableOpacity onPress={signOut}>
-      <Text style={{ color: "#c00", fontWeight: "600" }}>Sign out</Text>
+      <Text style={{ color: "#4f46e5", fontWeight: "600" }}>Sign out</Text>
     </TouchableOpacity>
   );
 }
@@ -28,7 +30,7 @@ function Routes() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color="#4f46e5" />
       </View>
     );
   }
@@ -38,13 +40,21 @@ function Routes() {
   }
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#fff", borderBottomWidth: 1, borderBottomColor: "#e6e8ef" },
+        headerTitleStyle: { fontWeight: "800", color: "#1f2330" },
+        headerTintColor: "#4f46e5",
+      }}
+    >
       <Stack.Screen
         name="Shop"
         component={ProductsScreen}
         options={{ title: "Corner Shop", headerRight: HeaderRight }}
       />
       <Stack.Screen name="Cart" component={CartScreen} options={{ title: "Your cart" }} />
+      <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ title: "Checkout" }} />
+      <Stack.Screen name="Order" component={OrderScreen} options={{ title: "Order confirmed" }} />
     </Stack.Navigator>
   );
 }
